@@ -24,6 +24,7 @@ class Calculator {
     const decimalDigits = stringNumber.split(".")[1];
 
     let integerDisplay;
+
     if (isNaN(integerDigits)) {
       integerDisplay = "";
     } else {
@@ -43,23 +44,24 @@ class Calculator {
   }
   calculate() {
     let result;
-    const _previousOperandFloat = parseFloat(this.previousOperand);
-    const _currentOperandFloat = parseFloat(this.currentOperand);
 
-    if (isNaN(_previousOperandFloat) || isNaN(_currentOperandFloat)) return;
+    const _previousOperand = parseFloat(this.previousOperand);
+    const _currentOperand = parseFloat(this.currentOperand);
+
+    if (isNaN(_previousOperand) || isNaN(_currentOperand)) return;
 
     switch (this.operation) {
       case "+":
-        result = _previousOperandFloat + _currentOperandFloat;
+        result = _previousOperand + _currentOperand;
         break;
       case "-":
-        result = _previousOperandFloat - _currentOperandFloat;
+        result = _previousOperand - _currentOperand;
         break;
       case "/":
-        result = _previousOperandFloat / _currentOperandFloat;
+        result = _previousOperand / _currentOperand;
         break;
       case "*":
-        result = _previousOperandFloat * _currentOperandFloat;
+        result = _previousOperand * _currentOperand;
         break;
       default:
         return;
@@ -82,9 +84,7 @@ class Calculator {
 
   appendNumber(number) {
     if (this.currentOperand.includes(".") && number === ".") return;
-    this.currentOperand = `${this.formatDisplayNumber(
-      this.currentOperand
-    )}${number.toString()}`;
+    this.currentOperand = `${this.currentOperand}${number.toString()}`;
   }
   clear() {
     this.currentOperand = "";
@@ -92,7 +92,7 @@ class Calculator {
     this.operation = undefined;
   }
   updateDisplay() {
-    this.previousOperandTextElement.innerText = `${this.previousOperand} ${
+    this.previousOperandTextElement.innerText = `${this.formatDisplayNumber(this.previousOperand)} ${
       this.operation || ""
     }`;
     this.currentOperandTextElement.innerText = this.formatDisplayNumber(
